@@ -18,9 +18,14 @@
         <apache.collections4.version>4.1</apache.collections4.version>
         <druid.version>1.1.10</druid.version>
         <fastjson.version>1.2.40</fastjson.version>
+        <sso.sdk.version>1.0-SNAPSHOT</sso.sdk.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -68,6 +73,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.tianqb</groupId>
+            <artifactId>tianqb-sso-sdk</artifactId>
+            <version>${sso.sdk.version}</version>
         </dependency>
     </dependencies>
 
