@@ -17,7 +17,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.security.MD5Encoder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -58,7 +60,10 @@ public class SsoServiceImpl implements SsoService {
         if (ObjectUtils.isEmpty(value)) {
             throw new SsoException("User not login", HttpStatus.UNAUTHORIZED.value());
         }
-        return JSONObject.parseObject(value, LoginContext.class);
+        UserInfo userInfo = JSONObject.parseObject(value, UserInfo.class);
+        LoginContext loginContext = new LoginContext();
+        BeanUtils.copyProperties(userInfo, loginContext);
+        return loginContext;
     }
 
     public AccessToken login(String username, String password) {
