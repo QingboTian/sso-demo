@@ -16,10 +16,9 @@ import cn.tianqb.utils.UUIDUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.security.MD5Encoder;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -67,9 +66,9 @@ public class SsoServiceImpl implements SsoService {
     }
 
     public AccessToken login(String username, String password) {
-        String token = null;
-        AccessToken accessToken = null;
-        String pwd = MD5Encoder.encode(password.getBytes());
+        String token;
+        AccessToken accessToken;
+        String pwd = DigestUtils.md5Hex(password.getBytes());
         UserInfoExample example = new UserInfoExample();
         example.createCriteria()
                 .andUsernameEqualTo(username);
@@ -136,7 +135,7 @@ public class SsoServiceImpl implements SsoService {
             }
         }
         userInfo.setOpenId(openId);
-        userInfo.setPassword(MD5Encoder.encode(userInfo.getPassword().getBytes()));
+        userInfo.setPassword(DigestUtils.md5Hex(userInfo.getPassword().getBytes()));
         userInfo.setStatus(StatusEnum.NORMAL.getCode());
 
     }
@@ -145,5 +144,9 @@ public class SsoServiceImpl implements SsoService {
         Assert.notNull(userInfo, "userInfo为空");
         Assert.isEmpty(userInfo.getUsername(), "用户名为空");
         Assert.isEmpty(userInfo.getPassword(), "密码为空");
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DigestUtils.md5Hex("123456"));
     }
 }

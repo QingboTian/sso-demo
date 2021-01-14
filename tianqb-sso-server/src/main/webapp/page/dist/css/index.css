@@ -1,0 +1,22 @@
+html body {
+    margin: 0;
+    background-color: #F2F6FC;
+    /* height: 100%;
+    width: 100%; */
+    display: flex;
+    flex-direction: column;
+}
+
+#container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    background-color: #fff;
+    width: 400px;
+    height: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+}
